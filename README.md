@@ -1,81 +1,102 @@
-# DocMind — AI Document Intelligence
+# 🧠 DocMind — AI Document Intelligence
 
-> Upload any PDF. Ask questions. Get accurate answers with page citations.
+> Upload any PDF. Ask questions. Get AI-powered answers with page citations.
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
-![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=flat&logo=langchain&logoColor=white)
-![ChromaDB](https://img.shields.io/badge/ChromaDB-FF6B35?style=flat)
-![Status](https://img.shields.io/badge/Status-Production_Ready-brightgreen)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-docmind--self.vercel.app-indigo?style=for-the-badge)](https://docmind-self.vercel.app)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
+[![Groq](https://img.shields.io/badge/Groq-LLM-F55036?style=flat)](https://groq.com)
+[![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?style=flat&logo=vercel)](https://vercel.com)
 
 ---
 
-## What It Does
+## ✨ Features
 
-1. **Upload** any PDF document (research papers, contracts, manuals, textbooks)
-2. **Ask** questions in natural language
-3. **Get** accurate answers with exact page citations
-4. **Chat** with follow-up questions (maintains conversation context)
+| Feature | Description |
+|---------|-------------|
+| 📄 **PDF Upload** | Client-side parsing with PDF.js — no server upload needed |
+| 💬 **AI Chat** | Ask questions, get answers with **[Page X]** citations |
+| 📋 **Auto Summary** | Instant document analysis: summary, topics, type, reading time |
+| 💡 **Smart Questions** | AI-suggested questions to explore the document |
+| 📝 **Quiz Mode** | Generate MCQ quizzes with scoring and explanations |
+| 🌍 **Multilingual** | Answers in 7 languages: EN, HI, ES, FR, AR, ZH, JA |
+| 📤 **Export** | Download chat history as Markdown |
+| 📱 **Mobile Responsive** | Full experience on any device |
 
-## Architecture
+## 🏗️ Architecture
 
 ```
-PDF Upload → PyMuPDF Extract → Recursive Chunking → Sentence-Transformer Embeddings
-                                                              ↓
-User Query → Embed Query → ChromaDB Similarity Search → Top-K Chunks → Groq LLM → Answer + Citations
+PDF Upload → PDF.js (client-side) → Text Extraction → Page Chunking
+                                                          ↓
+User Query → Vercel Serverless → Groq LLM (llama-3.3-70b) → Answer + Citations
 ```
 
-## Features
+## 🔧 Tech Stack
 
-- 📄 **PDF Processing** — Extracts text with page numbers using PyMuPDF
-- 🧠 **RAG Pipeline** — Retrieval-Augmented Generation with ChromaDB vector store
-- 🔍 **Semantic Search** — Sentence-transformer embeddings for accurate retrieval
-- 💬 **Chat Memory** — Multi-turn conversations with context window
-- 📌 **Page Citations** — Every answer includes source page numbers
-- ⚡ **Fast Inference** — Groq API for near-instant LLM responses
-- 🌐 **REST API** — FastAPI with auto-generated Swagger docs
-- 🖥️ **Web UI** — Clean chat interface for document Q&A
+- **Frontend**: HTML5, CSS3, Vanilla JS (ES6+), PDF.js, marked.js
+- **Backend**: Python Vercel Serverless Functions
+- **LLM**: Groq API (llama-3.3-70b-versatile)
+- **Deployment**: Vercel (zero-config)
 
-## Tech Stack
+## 📁 Project Structure
 
-| Component | Technology |
-|-----------|-----------|
-| Backend | FastAPI, Python |
-| LLM | Groq (Llama 3) |
-| Embeddings | sentence-transformers (all-MiniLM-L6-v2) |
-| Vector DB | ChromaDB |
-| PDF Parser | PyMuPDF (fitz) |
-| Frontend | HTML, CSS, JavaScript |
-| Framework | LangChain |
+```
+docmind/
+├── index.html           # Complete app UI
+├── static/style.css     # Design system (dark theme)
+├── api/
+│   ├── chat.py          # Q&A endpoint with citations
+│   ├── summary.py       # Auto-summary generation
+│   ├── quiz.py          # MCQ quiz generation
+│   └── questions.py     # Smart question suggestions
+├── vercel.json          # Deployment config
+└── requirements.txt     # Python dependencies
+```
 
-## Quick Start
+## 🚀 Quick Start
+
+### Deploy your own
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ansariazad/DocMind&env=GROQ_API_KEY)
+
+### Run locally
 
 ```bash
 git clone https://github.com/ansariazad/DocMind.git
 cd DocMind
 
+# Set your Groq API key
+echo "GROQ_API_KEY=your-key" > .env
+
+# Install dependencies
 pip install -r requirements.txt
 
-# Set your Groq API key
-export GROQ_API_KEY="your-groq-api-key"
-
-python main.py
+# Start dev server
+python3 -m http.server 3000
 ```
 
-- API: http://localhost:8000
-- Docs: http://localhost:8000/docs
-- Web UI: http://localhost:8000
+## 🔑 Environment Variables
 
-## API Endpoints
+| Variable | Description |
+|----------|-------------|
+| `GROQ_API_KEY` | Your Groq API key ([get one free](https://console.groq.com)) |
+
+## 📊 API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/upload` | Upload a PDF document |
-| `POST` | `/ask` | Ask a question about the document |
-| `GET` | `/documents` | List all uploaded documents |
-| `DELETE` | `/documents/{id}` | Delete a document and its vectors |
-| `GET` | `/health` | Health check |
+| `POST` | `/api/chat` | Ask questions with document context |
+| `POST` | `/api/summary` | Generate document summary |
+| `POST` | `/api/quiz` | Generate MCQ quiz |
+| `POST` | `/api/questions` | Suggest smart questions |
 
-## Author
+## 👨‍💻 Author
 
-**Azad Ansari** · [Portfolio](https://ansariazad.github.io/hire.html) · [GitHub](https://github.com/ansariazad)
+**Azad Ansari** — AI Automation Engineer
+
+- 🌐 [Portfolio](https://ansariazad.github.io/hire.html)
+- 💼 [LinkedIn](https://linkedin.com/in/azad-ansari-902035297)
+- 🐙 [GitHub](https://github.com/ansariazad)
+
+---
+
+*Built with ❤️ using Groq LLM for near-instant AI inference.*

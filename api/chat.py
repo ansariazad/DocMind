@@ -1,6 +1,6 @@
 """
-DocMind — Serverless API for Groq LLM
-Deployed on Vercel as a serverless function.
+DocMind v2 — Chat API (Vercel Serverless)
+Handles document Q&A with Groq LLM, citations, and conversation memory.
 """
 
 import os
@@ -8,51 +8,58 @@ import json
 from http.server import BaseHTTPRequestHandler
 from groq import Groq
 
+SYSTEM_PROMPT = """You are DocMind, an expert AI document analyst built by Azad Ansari.
+You answer questions ONLY based on the provided document context.
 
-def handle_chat(question: str, context: str, history: list) -> str:
-    """Generate answer using Groq LLM with document context."""
+Rules:
+1. Always cite page numbers using format: **[Page X]** inline in your answer
+2. If information is not in the context, say "I couldn't find this information in the document."
+3. Be concise but thorough. Use markdown: **bold**, bullet points, `code` where helpful
+4. Never fabricate information or use external knowledge
+5. For numbers, quotes, or specific facts — always cite the exact page
+6. Structure long answers with clear sections using markdown headings
+7. If asked to explain, provide clear examples from the document"""
+
+
+def generate_answer(question, context, history, language="English"):
     api_key = os.environ.get("GROQ_API_KEY", "")
     if not api_key:
-        return "⚠️ Server error: GROQ_API_KEY not configured."
+        return {"error": "GROQ_API_KEY not configured"}
 
     client = Groq(api_key=api_key)
 
-    # Build conversation history
     history_text = ""
     if history:
-        for msg in history[-6:]:
+        for msg in history[-8:]:
             role = "User" if msg.get("role") == "user" else "Assistant"
             history_text += f"{role}: {msg.get('content', '')}\n"
 
-    system_prompt = f"""You are DocMind, a precise AI document analyst. Answer questions based ONLY on the document context provided below.
+    lang_instruction = f"\nRespond in {language}. Keep technical terms in English." if language != "English" else ""
 
-Rules:
-1. Answer ONLY from the context. If the answer isn't there, say "I couldn't find this information in the document."
-2. Always cite the section or relevant text when referencing information.
-3. Be concise but complete. Use bullet points for lists.
-4. If the question is a greeting or not about the document, respond briefly and redirect to document questions.
-5. Format your answer with markdown for readability.
-
-{f"Previous conversation:{chr(10)}{history_text}" if history_text else ""}
+    prompt = f"""{SYSTEM_PROMPT}{lang_instruction}
 
 DOCUMENT CONTEXT:
-{context[:12000]}"""
+{context[:14000]}
 
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": question},
-    ]
+{f"CONVERSATION HISTORY:{chr(10)}{history_text}" if history_text else ""}
+
+USER QUESTION: {question}
+
+Provide a detailed, well-structured answer with inline **[Page X]** citations:"""
 
     try:
         response = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=messages,
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": "You are DocMind, a precise document analyst."},
+                {"role": "user", "content": prompt},
+            ],
             temperature=0.1,
-            max_tokens=1024,
+            max_tokens=1500,
         )
-        return response.choices[0].message.content
+        return {"answer": response.choices[0].message.content}
     except Exception as e:
-        return f"⚠️ Error generating response: {str(e)}"
+        return {"error": f"AI service error: {str(e)}", "retry": True}
 
 
 class handler(BaseHTTPRequestHandler):
@@ -63,36 +70,34 @@ class handler(BaseHTTPRequestHandler):
         try:
             data = json.loads(body)
         except json.JSONDecodeError:
-            self.send_response(400)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": "Invalid JSON"}).encode())
+            self._respond(400, {"error": "Invalid JSON"})
             return
 
         question = data.get("question", "").strip()
         context = data.get("context", "").strip()
         history = data.get("history", [])
+        language = data.get("language", "English")
 
         if not question:
-            self.send_response(400)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": "Question is required"}).encode())
+            self._respond(400, {"error": "Question is required"})
             return
 
-        answer = handle_chat(question, context, history)
-
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.end_headers()
-        self.wfile.write(json.dumps({"answer": answer}).encode())
+        result = generate_answer(question, context, history, language)
+        self._respond(200 if "answer" in result else 500, result)
 
     def do_OPTIONS(self):
         self.send_response(200)
+        self._cors_headers()
+        self.end_headers()
+
+    def _respond(self, code, data):
+        self.send_response(code)
+        self.send_header("Content-Type", "application/json")
+        self._cors_headers()
+        self.end_headers()
+        self.wfile.write(json.dumps(data).encode())
+
+    def _cors_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.end_headers()
