@@ -1,12 +1,16 @@
 {
     "version": 2,
     "builds": [
-        { "src": "api/**/*.py", "use": "@vercel/python" },
-        { "src": "index.html", "use": "@vercel/static" },
-        { "src": "static/**", "use": "@vercel/static" }
+        { "src": "api/chat.py", "use": "@vercel/python" },
+        { "src": "api/summary.py", "use": "@vercel/python" },
+        { "src": "api/quiz.py", "use": "@vercel/python" },
+        { "src": "api/questions.py", "use": "@vercel/python" }
     ],
     "routes": [
-        { "src": "/api/(.*)", "dest": "/api/$1" },
+        { "src": "/api/chat", "dest": "/api/chat.py" },
+        { "src": "/api/summary", "dest": "/api/summary.py" },
+        { "src": "/api/quiz", "dest": "/api/quiz.py" },
+        { "src": "/api/questions", "dest": "/api/questions.py" },
         { "src": "/static/(.*)", "dest": "/static/$1" },
         { "src": "/(.*)", "dest": "/index.html" }
     ]
