@@ -3,29 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocMind — AI Document Intelligence</title>
-    <meta name="description" content="Upload PDFs and have intelligent conversations with your documents. AI-powered answers with page citations, quizzes, summaries, and multi-language support.">
+
+    <!-- Primary SEO -->
+    <title>DocMind — AI Document Intelligence | Chat with Your PDFs</title>
+    <meta name="description" content="DocMind by Azad Ansari — Upload PDFs and chat with your documents instantly. AI-powered Q&A with page citations, auto-summaries, quiz mode, and 7-language support. Free to use.">
+    <meta name="keywords" content="DocMind, AI document reader, chat with PDF, PDF Q&A, document intelligence, AI quiz generator, PDF summary, Azad Ansari, Groq LLM, document analysis">
+    <meta name="author" content="Azad Ansari">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://docmind-self.vercel.app/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://docmind-self.vercel.app/">
+    <meta property="og:title" content="DocMind — AI Document Intelligence">
+    <meta property="og:description" content="Upload PDFs and have intelligent conversations with your documents. AI-powered answers with page citations, quizzes, and summaries.">
+    <meta property="og:site_name" content="DocMind">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DocMind — Chat with Your PDFs Instantly">
+    <meta name="twitter:description" content="Free AI-powered document intelligence. Upload a PDF, get instant answers with page citations, auto-summaries, and quizzes.">
+
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Marked.js for Markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "DocMind",
+        "url": "https://docmind-self.vercel.app/",
+        "description": "AI Document Intelligence — Upload PDFs and chat with your documents. Get instant answers with page citations, auto-summaries, quiz mode, and multi-language support.",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Azad Ansari",
+            "url": "https://ansariazad.github.io/"
+        },
+        "featureList": [
+            "PDF document Q&A with page citations",
+            "Auto-generated document summaries",
+            "AI-powered quiz mode",
+            "7-language support",
+            "Chat history export",
+            "Smart question suggestions"
+        ]
+    }
+    </script>
 </head>
 <body>
 
-<div class="bg-fx"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+<!-- Animated Background -->
+<div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
 
 <div class="app">
-    <!-- Header -->
-    <header>
-        <div style="display:flex;align-items:center;gap:10px;">
-            <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
-            <div class="logo">
-                <div class="logo-icon">🧠</div>
+    <!-- Navigation Header -->
+    <header role="banner">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar menu" id="menuToggle">☰</button>
+            <nav class="logo" aria-label="DocMind home">
+                <div class="logo-icon" aria-hidden="true">🧠</div>
                 <h1>DocMind</h1>
                 <span class="logo-sub">AI Document Intelligence</span>
-            </div>
+            </nav>
         </div>
         <div class="header-actions">
-            <select class="lang-select" id="langSelect">
+            <select class="lang-select" id="langSelect" aria-label="Select response language">
                 <option value="English">🌐 EN</option>
                 <option value="Hindi">🇮🇳 HI</option>
                 <option value="Spanish">🇪🇸 ES</option>
@@ -34,10 +95,10 @@
                 <option value="Chinese">🇨🇳 ZH</option>
                 <option value="Japanese">🇯🇵 JA</option>
             </select>
-            <button class="header-btn" id="quizBtn" onclick="startQuiz()" style="display:none">📝 Quiz</button>
-            <button class="header-btn" id="exportBtn" onclick="exportChat()" style="display:none">📤 Export</button>
-            <a href="https://github.com/ansariazad/DocMind" target="_blank" class="header-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <button class="header-btn" id="quizBtn" onclick="startQuiz()" style="display:none" aria-label="Start quiz mode">📝 Quiz</button>
+            <button class="header-btn" id="exportBtn" onclick="exportChat()" style="display:none" aria-label="Export chat as markdown">📤 Export</button>
+            <a href="https://github.com/ansariazad/DocMind" target="_blank" rel="noopener noreferrer" class="header-btn" aria-label="View source on GitHub">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 Source
             </a>
         </div>
@@ -47,66 +108,73 @@
 
     <div class="main">
         <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-                <div class="upload-icon">📄</div>
+        <aside class="sidebar" id="sidebar" role="complementary" aria-label="Document panel">
+            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" role="button" tabindex="0" aria-label="Upload a PDF document">
+                <div class="upload-icon" aria-hidden="true">📄</div>
                 <h3>Upload PDF</h3>
                 <p>Drop a file or click to browse</p>
-                <div class="hint">PDF up to 50MB</div>
+                <div class="hint">PDF up to 50MB · Processed locally</div>
             </div>
-            <input type="file" id="fileInput" accept=".pdf" hidden>
+            <input type="file" id="fileInput" accept=".pdf" hidden aria-hidden="true">
 
-            <div class="processing" id="processing">
+            <div class="processing" id="processing" role="status" aria-live="polite">
                 <div class="proc-row">
-                    <div class="spinner"></div>
+                    <div class="spinner" aria-hidden="true"></div>
                     <span class="proc-text" id="procText">Extracting text...</span>
                 </div>
-                <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="progress" role="progressbar"><div class="progress-fill" id="progressFill"></div></div>
             </div>
 
             <div class="section-label">Documents</div>
-            <div class="doc-list" id="docList">
+            <div class="doc-list" id="docList" role="list" aria-label="Uploaded documents">
                 <div class="doc-empty">No documents yet</div>
             </div>
         </aside>
 
-        <!-- Chat -->
-        <main class="chat-area">
-            <div class="empty-state" id="emptyState">
-                <div class="empty-icon">🧠</div>
+        <!-- Main Chat Area -->
+        <main class="chat-area" role="main">
+            <section class="empty-state" id="emptyState" aria-label="Welcome">
+                <div class="empty-icon" aria-hidden="true">🧠</div>
                 <h2>Upload a document to begin</h2>
-                <p>Ask questions, generate quizzes, get summaries, and compare documents — all powered by AI.</p>
-                <div class="feature-pills">
-                    <div class="fpill">📄 Any PDF</div>
-                    <div class="fpill">⚡ Instant answers</div>
-                    <div class="fpill">📝 Quiz mode</div>
-                    <div class="fpill">🌍 7 languages</div>
-                    <div class="fpill">📌 Page citations</div>
+                <p>Ask questions, generate quizzes, get summaries, and explore your documents — all powered by AI with instant page citations.</p>
+                <div class="feature-pills" role="list" aria-label="Features">
+                    <div class="fpill" role="listitem">📄 Any PDF</div>
+                    <div class="fpill" role="listitem">⚡ Instant answers</div>
+                    <div class="fpill" role="listitem">📝 Quiz mode</div>
+                    <div class="fpill" role="listitem">🌍 7 languages</div>
+                    <div class="fpill" role="listitem">📌 Page citations</div>
+                    <div class="fpill" role="listitem">📊 Auto-summary</div>
                 </div>
-            </div>
+                <div class="footer" aria-label="Credits">
+                    Built by <a href="https://ansariazad.github.io/" target="_blank" rel="noopener noreferrer">Azad Ansari</a> · Powered by Groq
+                </div>
+            </section>
 
-            <div class="messages" id="messages"></div>
-            <div class="suggestions" id="suggestions"></div>
+            <div class="messages" id="messages" role="log" aria-label="Chat messages" aria-live="polite"></div>
+            <div class="suggestions" id="suggestions" role="list" aria-label="Suggested questions"></div>
 
             <div class="input-bar" id="inputBar">
                 <div class="input-row">
-                    <input type="text" id="questionInput" placeholder="Ask anything about the document..."
+                    <input type="text" id="questionInput"
+                           placeholder="Ask anything about the document..."
+                           aria-label="Type your question"
+                           autocomplete="off"
                            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();askQuestion()}">
-                    <button class="send-btn" id="sendBtn" onclick="askQuestion()">➤</button>
+                    <button class="send-btn" id="sendBtn" onclick="askQuestion()" aria-label="Send question">➤</button>
                 </div>
-                <div class="input-hint">Enter to send · Powered by Groq LLM (llama-3.3-70b)</div>
+                <div class="input-hint">Enter to send · ⌘K for shortcuts · Powered by Groq LLM</div>
             </div>
         </main>
     </div>
 </div>
 
 <!-- Quiz Modal -->
-<div class="quiz-overlay" id="quizOverlay">
+<div class="quiz-overlay" id="quizOverlay" role="dialog" aria-modal="true" aria-label="Quiz mode">
     <div class="quiz-modal" id="quizModal"></div>
 </div>
 
 <!-- Toast Container -->
-<div class="toast-container" id="toasts"></div>
+<div class="toast-container" id="toasts" aria-live="assertive"></div>
 
 <script type="module">
 // PDF.js
@@ -142,6 +210,7 @@ const quizModal = $('quizModal');
 uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
 uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('dragover'); if(e.dataTransfer.files[0]?.type==='application/pdf') processFile(e.dataTransfer.files[0]); });
+uploadZone.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') { e.preventDefault(); fileInput.click(); } });
 fileInput.addEventListener('change', e => { if(e.target.files[0]) processFile(e.target.files[0]); fileInput.value=''; });
 
 async function processFile(file) {
@@ -165,12 +234,12 @@ async function processFile(file) {
                 pageTexts.push({page: i, text});
             }
             progressFill.style.width = `${25 + 50 * i / pdf.numPages}%`;
-            procText.textContent = `Page ${i}/${pdf.numPages}...`;
+            procText.textContent = `Extracting page ${i}/${pdf.numPages}...`;
         }
 
         if (!fullText.trim()) throw new Error('No text found — PDF may be scanned/image-only.');
 
-        progressFill.style.width = '80%'; procText.textContent = 'Generating summary...';
+        progressFill.style.width = '80%'; procText.textContent = 'Generating AI summary...';
 
         const docId = 'doc_' + Date.now();
         const doc = { id: docId, name: file.name, pages: pdf.numPages, text: fullText, pageTexts, chars: fullText.length, summary: null, questions: null };
@@ -191,7 +260,7 @@ async function processFile(file) {
         setTimeout(() => {
             processing.style.display = 'none'; progressFill.style.width = '0%';
             renderDocs(); selectDoc(docId); closeSidebar();
-        }, 500);
+        }, 600);
 
     } catch (err) {
         procText.textContent = `❌ ${err.message}`;
@@ -207,6 +276,7 @@ function renderDocs() {
     Object.values(docs).forEach(doc => {
         const el = document.createElement('div');
         el.className = `doc-card${activeDocId === doc.id ? ' active' : ''}`;
+        el.setAttribute('role', 'listitem');
         el.onclick = () => selectDoc(doc.id);
 
         let summaryHTML = '';
@@ -221,11 +291,11 @@ function renderDocs() {
         el.innerHTML = `
             <div class="doc-card-head">
                 <div class="doc-name">📄 ${doc.name}</div>
-                <div class="doc-del" onclick="event.stopPropagation();deleteDoc('${doc.id}')">×</div>
+                <div class="doc-del" onclick="event.stopPropagation();deleteDoc('${doc.id}')" aria-label="Delete document" role="button" tabindex="0">×</div>
             </div>
             <div class="doc-stats">
-                <span>📄 ${doc.pages} pages</span>
-                <span>📝 ${Math.round(doc.chars/1000)}k chars</span>
+                <span>${doc.pages} pages</span>
+                <span>${Math.round(doc.chars/1000)}k chars</span>
             </div>
             ${summaryHTML}
         `;
@@ -264,6 +334,7 @@ function selectDoc(docId) {
         doc.questions.forEach(q => {
             const chip = document.createElement('div');
             chip.className = 'suggest-chip';
+            chip.setAttribute('role', 'listitem');
             chip.textContent = q;
             chip.onclick = () => { questionInput.value = q; askQuestion(); };
             suggestionsEl.appendChild(chip);
@@ -308,7 +379,7 @@ function addBotMsg(text) {
         <div class="content">${html}</div>
         <div class="msg-time">${timeNow()}</div>
         <div class="msg-actions">
-            <button class="msg-action-btn" onclick="copyMsg(this)">📋 Copy</button>
+            <button class="msg-action-btn" onclick="copyMsg(this)" aria-label="Copy message">📋 Copy</button>
         </div>
     `;
     messagesEl.appendChild(el);
@@ -319,7 +390,9 @@ function addBotMsg(text) {
 function showTyping() {
     const el = document.createElement('div');
     el.className = 'typing'; el.id = 'typingEl';
-    el.innerHTML = '<div class="bot-avatar" style="width:20px;height:20px;background:linear-gradient(135deg,var(--accent),#818CF8);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px">🧠</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-label', 'DocMind is thinking');
+    el.innerHTML = '<div class="bot-avatar" style="width:24px;height:24px;background:linear-gradient(135deg,var(--accent),var(--accent-hover));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px">🧠</div><div class="typing-dots"><span></span><span></span><span></span></div>';
     messagesEl.appendChild(el); scrollBottom();
 }
 function hideTyping() { $('typingEl')?.remove(); }
@@ -396,13 +469,13 @@ function renderQuizQuestion() {
     quizModal.innerHTML = `
         <div class="quiz-header">
             <h2>📝 Quiz Mode</h2>
-            <button class="quiz-close" onclick="quizOverlay.classList.remove('show')">✕</button>
+            <button class="quiz-close" onclick="quizOverlay.classList.remove('show')" aria-label="Close quiz">✕</button>
         </div>
         <div class="quiz-progress">${quizData.map((_, i) => `<div class="quiz-dot ${i < quizIndex ? 'done' : i === quizIndex ? 'current' : ''}"></div>`).join('')}</div>
-        <div style="font-size:11px;color:var(--text-3);margin-bottom:8px">Question ${quizIndex+1} of ${quizData.length}</div>
+        <div style="font-size:11px;color:var(--text-3);margin-bottom:10px;font-family:var(--mono)">Question ${quizIndex+1} of ${quizData.length}</div>
         <div class="quiz-q">${q.question}</div>
         <div class="quiz-opts">
-            ${Object.entries(q.options).map(([k, v]) => `<div class="quiz-opt" onclick="checkAnswer('${k}')"><span class="opt-letter">${k}</span>${v}</div>`).join('')}
+            ${Object.entries(q.options).map(([k, v]) => `<div class="quiz-opt" onclick="checkAnswer('${k}')" role="button" tabindex="0"><span class="opt-letter">${k}</span>${v}</div>`).join('')}
         </div>
         <div class="quiz-explanation" id="quizExplanation"></div>
         <button class="quiz-next" id="quizNext" onclick="quizIndex++;renderQuizQuestion()">Next →</button>
@@ -420,7 +493,7 @@ window.checkAnswer = (selected) => {
     });
     if (selected === q.correct) quizScore++;
     const expl = $('quizExplanation');
-    expl.innerHTML = `${selected === q.correct ? '✅ Correct!' : '❌ Incorrect.'} ${q.explanation || ''} ${q.page ? `<span class="cite">[Page ${q.page}]</span>` : ''}`;
+    expl.innerHTML = `${selected === q.correct ? '✅ Correct!' : '❌ Incorrect.'} ${q.explanation || ''} ${q.page ? `<span class="cite">📄 Page ${q.page}</span>` : ''}`;
     expl.classList.add('show');
     $('quizNext').classList.add('show');
     $('quizNext').textContent = quizIndex < quizData.length - 1 ? 'Next →' : 'See Results';
@@ -430,12 +503,12 @@ function renderQuizScore() {
     const pct = Math.round(quizScore / quizData.length * 100);
     const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : '📚';
     quizModal.innerHTML = `
-        <div class="quiz-header"><h2>Quiz Results</h2><button class="quiz-close" onclick="quizOverlay.classList.remove('show')">✕</button></div>
+        <div class="quiz-header"><h2>Quiz Results</h2><button class="quiz-close" onclick="quizOverlay.classList.remove('show')" aria-label="Close quiz results">✕</button></div>
         <div class="quiz-score">
-            <div style="font-size:48px;margin-bottom:8px">${emoji}</div>
+            <div style="font-size:56px;margin-bottom:12px">${emoji}</div>
             <div class="score-big">${quizScore}/${quizData.length}</div>
             <div class="score-label">${pct}% correct</div>
-            <button class="quiz-next show" style="margin-top:20px" onclick="quizOverlay.classList.remove('show')">Close</button>
+            <button class="quiz-next show" style="margin-top:24px" onclick="quizOverlay.classList.remove('show')">Close</button>
         </div>
     `;
 }
@@ -458,10 +531,8 @@ window.exportChat = () => {
 
 // ─── Utilities ───
 function formatAnswer(text) {
-    // Parse markdown
     let html = marked.parse(text || '');
-    // Convert [Page X] to citation chips
-    html = html.replace(/\*?\*?\[Page\s*(\d+)\]\*?\*?/g, '<span class="cite" onclick="toast(\'Page $1 referenced\',\'info\')">📄 Page $1</span>');
+    html = html.replace(/\*?\*?\[Page\s*(\d+)\]\*?\*?/g, '<span class="cite" onclick="toast(\'Page $1 referenced\',\'info\')" role="button" tabindex="0">📄 Page $1</span>');
     return html;
 }
 
@@ -491,9 +562,21 @@ window.toast = (msg, type='info') => {
     const el = document.createElement('div');
     el.className = `toast ${type}`;
     el.textContent = msg;
+    el.setAttribute('role', 'alert');
     $('toasts').appendChild(el);
     setTimeout(() => el.remove(), 4000);
 };
+
+// ─── Keyboard shortcuts ───
+document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        questionInput?.focus();
+    }
+    if (e.key === 'Escape' && quizOverlay.classList.contains('show')) {
+        quizOverlay.classList.remove('show');
+    }
+});
 </script>
 
 </body>
